@@ -104,7 +104,7 @@ const App = () => {
      * @param checked
      */
     const handleAdmin = (checked,) => {
-        // setAdmin(checked)
+        setAdmin(checked)
         message.success("修改管理员状态成功").then(res => {
         })
     }
@@ -201,10 +201,10 @@ const App = () => {
                 <Switch onClick={handleAdmin}/>
             </Form.Item>
 
-            <Form.Item label="性别">
-                <Select className="sex-input" allowClear={true} disabled={true} placeholder={sex}>
-                    <Select.Option value="man">男</Select.Option>
-                    <Select.Option value="woman">女</Select.Option>
+            <Form.Item label="性别" name="sex">
+                <Select className="sex-input"  allowClear={true} disabled={false} placeholder={sex}>
+                    <Select.Option value={1}>男</Select.Option>
+                    <Select.Option value={0}>女</Select.Option>
                 </Select>
             </Form.Item>
 

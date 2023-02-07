@@ -1,19 +1,25 @@
-import { Outlet,  useNavigation, } from "react-router-dom";
-import { Layout,  Breadcrumb } from "antd";
+import {Outlet, useNavigate, useNavigation,} from "react-router-dom";
+import {Layout, Breadcrumb, message} from "antd";
 import SiderBar from "../../components/layout/SiderBar.jsx";
 import {useEffect, useState} from "react";
 import {getMe} from "../../api/users.js";
+import {LoginOutlined} from "@ant-design/icons";
+import {removeToken} from "../../../utils/auth.js";
 
 const { Header, Content } = Layout;
 
 
 export default function Root() {
-    const [avatar,setAvatar] = useState("")
-
+    const [data,setData] = useState({})
+    const navigate = useNavigate();
     const init = async () => {
-        // const res = await getMe()
-        // console.log(999,res)
-        // setAvatar(res.data.)
+        const res = await getMe()
+        setData(res.data.user)
+    }
+    const logout = () => {
+        removeToken()
+        navigate(`/login`)
+        return message.success("退出成功")
     }
 
 
@@ -23,9 +29,10 @@ export default function Root() {
 
     return (
         <Layout>
-            <Header className="header">
-                <div className="logo"><img src="src/assets/image/86731b6195f4e00f3cec9d9883bcbadf.jpg" alt="logo"/></div>
+            <Header className="header" style={{display:"flex",alignItems:"center",cursor:"pointer"}} title="退出登录">
+                <div className="logo"><img src={data.avatar} alt="logo"/></div>
                 <div className="header-title">课程后台管理系统</div>
+                <LoginOutlined style={{color:"rgb(250, 128, 114)",fontSize:28,marginLeft:20,}} onClick={logout} />
             </Header>
             <Layout>
                 {/* 侧边栏菜单 */}

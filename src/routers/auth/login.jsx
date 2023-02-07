@@ -1,8 +1,8 @@
-import { Button, Checkbox, Form, Input, message } from 'antd';
+import {Button, Checkbox, Form, Input, message} from 'antd';
 import React from 'react';
-import { login } from "../../api/auth";
-import { setToken } from "../../../utils/auth";
-import { useNavigate } from "react-router-dom";
+import {login} from "../../api/auth";
+import {setToken} from "../../../utils/auth";
+import {useNavigate} from "react-router-dom";
 
 const App = () => {
 
@@ -12,7 +12,7 @@ const App = () => {
         if (res.code !== 20000) {
             return message.error(res.message)
         }
-        setToken(res.data.token,values.remember)
+        setToken(res.data.token, values.remember)
         navigate("/")
     };
 
@@ -21,14 +21,9 @@ const App = () => {
             <div className="login">
                 <Form
                     name="basic"
-                    labelCol={{
-                        span: 8,
-                    }}
-                    wrapperCol={{
-                        span: 16,
-                    }}
+
                     style={{
-                        maxWidth: 800,
+                        maxWidth: 699,
                         margin: "0 auto ",
                         paddingTop: "10%"
                     }}
@@ -38,6 +33,9 @@ const App = () => {
                     onFinish={onFinish}
                     autoComplete="off"
                 >
+                    <div className="login-title" style={{textAlign:"center",fontSize:28}}>
+                        <p>Serein of Class Backstage</p>
+                    </div>
                     <Form.Item
                         label="用户名"
                         name="username"
@@ -67,23 +65,12 @@ const App = () => {
                     <Form.Item
                         name="remember"
                         valuePropName="checked"
-                        wrapperCol={{
-                            offset: 8,
-                            span: 16,
-                        }}
+                        style={{display:"flex",justifyContent:"center"}}
                     >
-                        <Checkbox>记住我</Checkbox>
-                    </Form.Item>
-
-                    <Form.Item
-                        wrapperCol={{
-                            offset: 8,
-                            span: 16,
-                        }}
-                    >
-                        <Button type="primary" htmlType="submit">
+                        <Button type="primary" htmlType="submit" >
                             登录
                         </Button>
+                        <Checkbox style={{marginLeft:10}}>记住我</Checkbox>
                     </Form.Item>
                 </Form>
             </div>

@@ -49,6 +49,8 @@ const App = () => {
      */
     const onChange = (page, pageSize) => {
         setPageParams({
+            ...pageParams,
+            courseId,
             currentPage: page,
             pageSize
         })
