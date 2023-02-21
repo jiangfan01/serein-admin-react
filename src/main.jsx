@@ -27,6 +27,8 @@ import UsersEdit from "./routers/users/edit.jsx";
 import ChaptersList from "./routers/chapters/index.jsx";
 import ChaptersCreate from "./routers/chapters/create.jsx";
 import ChaptersEdit from "./routers/chapters/edit.jsx";
+import ShowChapters from "./routers/pages/ShowChapters.jsx";
+import ShowArticles from "./routers/pages/ShowArticles.jsx";
 
 import {getToken} from "../utils/auth.js";
 
@@ -35,8 +37,6 @@ const RequireAuth = ({ children }) => {
     if (!token) {
         return <Navigate to="/login"/>;
     }
-
-
     return children;
 }
 
@@ -44,6 +44,14 @@ const router = createBrowserRouter([
     {
         path: "login",
         element: <Login/>
+    },
+    {
+        path: "show_article/:id",
+        element: <ShowArticles/>,
+    },
+    {
+        path: "show_chapter/:id",
+        element: <ShowChapters/>,
     },
     {
         path: "/",
@@ -110,6 +118,7 @@ const router = createBrowserRouter([
                 path: "users/edit/:id",
                 element: <UsersEdit/>,
             },
+
         ],
 
     },

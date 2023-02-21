@@ -3,7 +3,6 @@ import {Button, Space, Table, message, Popconfirm, Pagination, Switch} from "ant
 import {Link} from "react-router-dom";
 import {fetchChapterList, deleteChapter} from "../../api/chapters.js";
 import formatDate from "../../../utils/formatDate.js";
-import {CheckOutlined, CloseOutlined} from "@ant-design/icons";
 import {useSearchParams} from "react-router-dom";
 
 

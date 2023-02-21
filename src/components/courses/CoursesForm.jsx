@@ -129,7 +129,10 @@ const App = (props) => {
      */
     const onFinish = async (values) => {
         let res
-
+        values = {
+            ...values,
+            image:imageUrl
+        }
         if (props.isEdit) {
             res = await updateCourse(params.id, values)
         } else {
@@ -185,7 +188,7 @@ const App = (props) => {
                 <Input/>
             </Form.Item>
 
-            <Form.Item label="课程图片">
+            <Form.Item label="课程图片" >
                 <Upload
                     name="file"
                     action="http://up-z2.qiniup.com/"

@@ -2,9 +2,9 @@ import {Button, Form, Input, InputNumber, message,} from 'antd';
 import React, {useEffect, useState} from "react";
 import {createChapter, fetchChapter, updateChapter} from "../../api/chapters.js";
 import {Link, useNavigate, useParams, useSearchParams} from "react-router-dom";
-
-const {TextArea} = Input;
-
+import MdEditor from "react-markdown-editor-lite";
+import 'react-markdown-editor-lite/lib/index.css';
+import MarkdownIt from "markdown-it";
 
 const rules = {
     title: [{required: true, message: "请填写章节标题!"}],
@@ -20,10 +20,13 @@ const App = (props) => {
     const [form] = Form.useForm();
     const [searchParams] = useSearchParams();
     const courseId = searchParams.get("courseId")
+    const [contentHtml, setContentHtml] = useState("")
+    const [content, setContent] = useState("")
     const init = async () => {
         const res = await fetchChapter(params.id)
-        console.log(courseId)
+        console.log(444, res)
         form.setFieldsValue(res.data.chapter)
+        setContent(res.data.chapter.content)
     }
 
     useEffect(() => {
@@ -32,16 +35,31 @@ const App = (props) => {
         }
     }, []);
 
+    const mdParser = new MarkdownIt(/* Markdown-it options */);
+
+    const renderHTML = (text) => {
+        // 模拟异步渲染Markdown
+        return new Promise((resolve) => {
+            resolve(mdParser.render(text))
+        })
+    }
+
+    const handleEditorChange = ({html, text}) => {
+        setContentHtml(html)
+        setContent(text)
+    }
+
     const onFinish = async (values) => {
         values = {
             ...values,
-            courseId
+            courseId,
+            content, contentHtml
         }
         let res
         if (props.isEdit) {
-           res = await updateChapter(params.id, values)
+            res = await updateChapter(params.id, values)
         } else {
-           res = await createChapter(values)
+            res = await createChapter(values)
         }
 
         if (res.code !== 20000) {
@@ -58,16 +76,13 @@ const App = (props) => {
                 form={form}
                 name="basic"
                 labelCol={{
-                    span: 8,
+                    span: 2,
                 }}
                 wrapperCol={{
-                    span: 16,
-                }}
-                style={{
-                    maxWidth: 600,
+                    span: 14,
                 }}
                 initialValues={{
-                    remember: true,
+                    sort: 1,
                 }}
                 onFinish={onFinish}
                 autoComplete="off"
@@ -97,11 +112,19 @@ const App = (props) => {
                 </Form.Item>
 
                 <Form.Item
-                    label="内容"
-                    name="content"
-                    rules={rules.content}
+                    label="HTML格式"
                 >
-                    <TextArea rows={4}/>
+                    <MdEditor value={content} style={{height: '500px', paddingLeft: "50"}} renderHTML={renderHTML}
+                              onChange={handleEditorChange}
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    label="查看详情"
+                >
+                    <Link to={`/show_chapter/${params.id}`}>
+                        <Button size="large">查看详细</Button>
+                    </Link>
                 </Form.Item>
 
                 <Form.Item

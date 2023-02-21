@@ -62,14 +62,7 @@ const App = () => {
             }}>
                 <Column title="编号" dataIndex="id" key="id" align="center"/>
                 <Column title="文章标题" dataIndex="title" key="title" align="center"/>
-                <Column
-                    title="发布时间"
-                    key="createdAt"
-                    align="center"
-                    render={(_, record) => (
-                        <div>{formatDate(record.createdAt)}</div>
-                    )}
-                />
+                <Column title="发布时间" dataIndex="createdAt" key="createdAt" align="center"/>
                 <Column
                     title="操作"
                     key="action"
