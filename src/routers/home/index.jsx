@@ -102,7 +102,6 @@ const App = () => {
          *  课程统计
          */
         const courseRes = await courseCharts()
-        console.log(1111,courseRes)
         const courseOption = {
             title:{
                 text: '课程统计'
